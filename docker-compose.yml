@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app-s6:
+    build:
+      context: ./fpm
+      dockerfile: Dockerfile
+    image: myapp/app-s6
+    container_name: app-s6
+    volumes:
+      - ./code:/data/application.local
+    networks:
+      - app-network-s6
+
+  nginx-s6:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: myapp/nginx-s6
+    container_name: nginx-s6
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./code:/data/application.local
+    networks:
+      - app-network-s6
+
+networks:
+  app-network-s6:
+    driver: bridge

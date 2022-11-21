@@ -1,0 +1,39 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    URL Analyzable Result
+{% endblock %}
+
+{% block header %}
+    <h1>URL Analyzable Result</h1>
+{% endblock %}
+
+{% block body %}
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% set i = 0 %}
+            {% set totalSize = 0 %}
+            {% for image in images %}
+                {% if i%4 == 0 %}
+                    <tr>
+                {% endif%}
+                
+                <td><img src="{{ image.src }}" alt="{{ image.size }}"></td>
+                {% set totalSize = totalSize + image.size %}
+
+                {% if i%4 == 3 %}
+                    </tr>
+                {% endif %}
+                {% set i = i + 1 %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Всего изображений: {{ images|length }}</p>
+    <p>Общий размер файлов с изображениями: {{ totalSize }}</p>
+{% endblock %}
